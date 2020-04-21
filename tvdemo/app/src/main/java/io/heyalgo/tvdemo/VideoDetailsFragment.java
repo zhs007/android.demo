@@ -18,6 +18,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+
 import androidx.leanback.app.DetailsFragment;
 import androidx.leanback.app.DetailsFragmentBackgroundController;
 import androidx.leanback.widget.Action;
@@ -37,6 +38,7 @@ import androidx.leanback.widget.Row;
 import androidx.leanback.widget.RowPresenter;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
+
 import android.util.Log;
 import android.widget.Toast;
 
@@ -79,7 +81,7 @@ public class VideoDetailsFragment extends DetailsFragment {
         mDetailsBackground = new DetailsFragmentBackgroundController(this);
 
         mSelectedMovie =
-                (Movie) getActivity().getIntent() .getSerializableExtra(DetailsActivity.MOVIE);
+                (Movie) getActivity().getIntent().getSerializableExtra(DetailsActivity.MOVIE);
         if (mSelectedMovie != null) {
             mPresenterSelector = new ClassPresenterSelector();
             mAdapter = new ArrayObjectAdapter(mPresenterSelector);
@@ -196,7 +198,7 @@ public class VideoDetailsFragment extends DetailsFragment {
             listRowAdapter.add(list.get(j % 5));
         }
 
-            HeaderItem header = new HeaderItem(0, subcategories[0]);
+        HeaderItem header = new HeaderItem(0, subcategories[0]);
         mAdapter.add(new ListRow(header, listRowAdapter));
         mPresenterSelector.addClassPresenter(ListRow.class, new ListRowPresenter());
     }
@@ -221,10 +223,10 @@ public class VideoDetailsFragment extends DetailsFragment {
 
                 Bundle bundle =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(
-                            getActivity(),
-                            ((ImageCardView) itemViewHolder.view).getMainImageView(),
-                            DetailsActivity.SHARED_ELEMENT_NAME)
-                        .toBundle();
+                                getActivity(),
+                                ((ImageCardView) itemViewHolder.view).getMainImageView(),
+                                DetailsActivity.SHARED_ELEMENT_NAME)
+                                .toBundle();
                 getActivity().startActivity(intent, bundle);
             }
         }

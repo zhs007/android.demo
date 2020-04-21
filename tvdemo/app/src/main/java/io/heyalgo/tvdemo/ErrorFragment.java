@@ -14,7 +14,9 @@
 package io.heyalgo.tvdemo;
 
 import android.os.Bundle;
+
 import androidx.core.content.ContextCompat;
+
 import android.util.Log;
 import android.view.View;
 

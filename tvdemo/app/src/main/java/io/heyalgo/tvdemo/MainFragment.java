@@ -19,6 +19,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+
 import androidx.leanback.app.BackgroundManager;
 import androidx.leanback.app.BrowseFragment;
 import androidx.leanback.widget.ArrayObjectAdapter;
@@ -33,6 +34,7 @@ import androidx.leanback.widget.Row;
 import androidx.leanback.widget.RowPresenter;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
+
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -105,11 +107,11 @@ public class MainFragment extends BrowseFragment {
             for (int j = 0; j < NUM_COLS; j++) {
                 listRowAdapter.add(list.get(j % 5));
             }
-                HeaderItem header = new HeaderItem(i, MovieList.MOVIE_CATEGORY[i]);
+            HeaderItem header = new HeaderItem(i, MovieList.MOVIE_CATEGORY[i]);
             rowsAdapter.add(new ListRow(header, listRowAdapter));
         }
 
-            HeaderItem gridHeader = new HeaderItem(i, "PREFERENCES");
+        HeaderItem gridHeader = new HeaderItem(i, "PREFERENCES");
 
         GridItemPresenter mGridPresenter = new GridItemPresenter();
         ArrayObjectAdapter gridRowAdapter = new ArrayObjectAdapter(mGridPresenter);
@@ -159,48 +161,6 @@ public class MainFragment extends BrowseFragment {
         setOnItemViewSelectedListener(new ItemViewSelectedListener());
     }
 
-    private final class ItemViewClickedListener implements OnItemViewClickedListener {
-        @Override
-        public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item,
-                                  RowPresenter.ViewHolder rowViewHolder, Row row) {
-
-            if (item instanceof Movie) {
-                Movie movie = (Movie) item;
-                Log.d(TAG, "Item: " + item.toString());
-                Intent intent = new Intent(getActivity(), DetailsActivity.class);
-                intent.putExtra(DetailsActivity.MOVIE, movie);
-
-                Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                                                getActivity(),
-                                                ((ImageCardView) itemViewHolder.view).getMainImageView(),
-                                                DetailsActivity.SHARED_ELEMENT_NAME)
-                                        .toBundle();
-                getActivity().startActivity(intent, bundle);
-            } else if (item instanceof String) {
-                if (((String) item).contains(getString(R.string.error_fragment))) {
-                    Intent intent = new Intent(getActivity(), BrowseErrorActivity.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(getActivity(), ((String) item), Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-    }
-
-    private final class ItemViewSelectedListener implements OnItemViewSelectedListener {
-        @Override
-        public void onItemSelected(
-                Presenter.ViewHolder itemViewHolder,
-                Object item,
-                RowPresenter.ViewHolder rowViewHolder,
-                Row row) {
-            if (item instanceof Movie) {
-                mBackgroundUri = ((Movie) item).getBackgroundImageUrl();
-                startBackgroundTimer();
-            }
-        }
-    }
-
     private void updateBackground(String uri) {
         int width = mMetrics.widthPixels;
         int height = mMetrics.heightPixels;
@@ -225,6 +185,48 @@ public class MainFragment extends BrowseFragment {
         }
         mBackgroundTimer = new Timer();
         mBackgroundTimer.schedule(new UpdateBackgroundTask(), BACKGROUND_UPDATE_DELAY);
+    }
+
+    private final class ItemViewClickedListener implements OnItemViewClickedListener {
+        @Override
+        public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item,
+                                  RowPresenter.ViewHolder rowViewHolder, Row row) {
+
+            if (item instanceof Movie) {
+                Movie movie = (Movie) item;
+                Log.d(TAG, "Item: " + item.toString());
+                Intent intent = new Intent(getActivity(), DetailsActivity.class);
+                intent.putExtra(DetailsActivity.MOVIE, movie);
+
+                Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        getActivity(),
+                        ((ImageCardView) itemViewHolder.view).getMainImageView(),
+                        DetailsActivity.SHARED_ELEMENT_NAME)
+                        .toBundle();
+                getActivity().startActivity(intent, bundle);
+            } else if (item instanceof String) {
+                if (((String) item).contains(getString(R.string.error_fragment))) {
+                    Intent intent = new Intent(getActivity(), BrowseErrorActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getActivity(), ((String) item), Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+
+    private final class ItemViewSelectedListener implements OnItemViewSelectedListener {
+        @Override
+        public void onItemSelected(
+                Presenter.ViewHolder itemViewHolder,
+                Object item,
+                RowPresenter.ViewHolder rowViewHolder,
+                Row row) {
+            if (item instanceof Movie) {
+                mBackgroundUri = ((Movie) item).getBackgroundImageUrl();
+                startBackgroundTimer();
+            }
+        }
     }
 
     private class UpdateBackgroundTask extends TimerTask {
@@ -260,7 +262,8 @@ public class MainFragment extends BrowseFragment {
         }
 
         @Override
-        public void onUnbindViewHolder(ViewHolder viewHolder) { }
+        public void onUnbindViewHolder(ViewHolder viewHolder) {
+        }
     }
 
 }
