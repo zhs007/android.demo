@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private FrameLayout fullscreenContainer;
     private WebChromeClient.CustomViewCallback customViewCallback;
 
-    private String webUrl = "https://www.6vdy.org/dianshiju/oumeiju/";
+    private String webUrl = "file:///android_asset/index.html";//"https://www.6vdy.org/dianshiju/oumeiju/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
